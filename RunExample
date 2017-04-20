@@ -2,8 +2,8 @@
 
 
 ### Stable variables
-FW_File=$PWD/InputExample/S10_S10_L001_R1_001.fastq
-RV_File=$PWD/InputExample/S10_S10_L001_R2_001.fastq
+FW_File=$PWD/InputExample/Example_R1_001.fastq
+RV_File=$PWD/InputExample/Example_R2_001.fastq
 # Illumina adapters
 Ill_FW="GTATAAGAGACAG"
 Ill_RV="CTGTCTCTTATAC"
