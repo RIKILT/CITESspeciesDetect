@@ -13,9 +13,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 <strong>Dependencies</strong> </br>
 
 The following dependencies are required: </br>
-Place your copy of usearch v8.1.1861 for linux 32 bit in /bin (http://www.drive5.com/usearch/download.html) </br>
-Install cutadapt v1.9+, for installation instructions see: http://cutadapt.readthedocs.io/en/stable/installation.html </br>
-For BLAST, copy the NBCI nucleotide (nt) and taxonomy (taxdb) databases into /BLASTdb (ftp://ftp.ncbi.nlm.nih.gov/blast/db/).</br>
+&#8594;Place your copy of usearch v8.1.1861 for linux 32 bit in /bin (http://www.drive5.com/usearch/download.html) </br>
+&#8594;Install cutadapt v1.9+, for installation instructions see: http://cutadapt.readthedocs.io/en/stable/installation.html </br>
+&#8594;Download the NBCI nucleotide (nt) and taxonomy (taxdb) databases into /BLASTdb (ftp://ftp.ncbi.nlm.nih.gov/blast/db/).</br>
+&#8594;Unzip /bin/blastn.zip. </br>
 
 <strong>General usage</strong> </br>
 The basic command to run the example analysis: 
