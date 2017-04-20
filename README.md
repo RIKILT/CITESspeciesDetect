@@ -15,7 +15,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 <strong>Dependencies</strong>
 
 The following dependencies are required:
-<p>Install usearch v8.1.1861 for linux 32 bit in /bin (http://www.drive5.com/usearch/download.html)</p>
+<p>Place your copy of usearch v8.1.1861 for linux 32 bit in /bin (http://www.drive5.com/usearch/download.html)</p>
+<p>Install cutadapt v1.9+, for installation instructions see: http://cutadapt.readthedocs.io/en/stable/installation.html
 <p>For BLAST, copy the NBCI nucleotide (nt) and taxonomy (taxdb) databases into /BLASTdb (ftp://ftp.ncbi.nlm.nih.gov/blast/db/).</p>
+
+<strong>General usage</strong>
+The basic command to run the pipeline is: 
+´´´
+bash CITES_pipelineV3 <FW_File> <RV_File> <SampleName> <Output directory> <List with barcodes> <List with the CITES listing> <Forward Illumina adapter> <Reverse Illumina adapter> <Minimum quality> <Minimal percentage which is above the minimum quality> <OTU radius> <Minimum readlength for clustering> <E-value> <Maximum target sequences for BLAST> <Minimum query length> <Minimum query coverage> <Percentage of identity> <OTU abundance for the output filtering> <Minimum percent of identity for the output filtering>
+```
+
 
 
