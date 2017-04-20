@@ -1,0 +1,401 @@
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+Sorry, we have to rerun the configuration dialog for CPAN.pm due to
+some missing parameters. Configuration will be written to
+ <</ssddata/pipeline/bin/edirect/_cpan/CPAN/MyConfig.pm>>
+
+ <install_help>
+
+Warning: You do not have write permission for Perl library directories.
+
+To install modules, you need to configure a local Perl library directory or
+escalate your privileges.  CPAN can help you by bootstrapping the local::lib
+module or by configuring itself to use 'sudo' (if available).  You may also
+resolve this problem manually if you need to customize your setup.
+
+What approach do you want?  (Choose 'local::lib', 'sudo' or 'manual')
+ [manual] manual
+
+Your 'urllist' is already configured. Type 'o conf init urllist' to change it.
+
+Autoconfiguration complete.
+
+commit: wrote '/ssddata/pipeline/bin/edirect/_cpan/CPAN/MyConfig.pm'
+
+You can re-run configuration any time with 'o conf init' in the CPAN shell
+Fetching with LWP:
+http://www.perl.org/CPAN/authors/01mailrc.txt.gz
+Reading '/ssddata/pipeline/bin/edirect/_cpan/sources/authors/01mailrc.txt.gz'
+............................................................................DONE
+Fetching with LWP:
+http://www.perl.org/CPAN/modules/02packages.details.txt.gz
+Reading '/ssddata/pipeline/bin/edirect/_cpan/sources/modules/02packages.details.txt.gz'
+  Database was generated on Thu, 15 Dec 2016 13:53:43 GMT
+............................................................................DONE
+Fetching with LWP:
+http://www.perl.org/CPAN/modules/03modlist.data.gz
+Reading '/ssddata/pipeline/bin/edirect/_cpan/sources/modules/03modlist.data.gz'
+DONE
+Writing /ssddata/pipeline/bin/edirect/_cpan/Metadata
+Running get for module 'local::lib'
+Fetching with LWP:
+http://www.perl.org/CPAN/authors/id/H/HA/HAARG/local-lib-2.000019.tar.gz
+Fetching with LWP:
+http://www.perl.org/CPAN/authors/id/H/HA/HAARG/CHECKSUMS
+Checksum for /ssddata/pipeline/bin/edirect/_cpan/sources/authors/id/H/HA/HAARG/local-lib-2.000019.tar.gz ok
+'YAML' not installed, will not store persistent state
+Running install for module 'Mozilla::CA'
+Fetching with LWP:
+http://www.perl.org/CPAN/authors/id/A/AB/ABH/Mozilla-CA-20160104.tar.gz
+Fetching with LWP:
+http://www.perl.org/CPAN/authors/id/A/AB/ABH/CHECKSUMS
+Checksum for /ssddata/pipeline/bin/edirect/_cpan/sources/authors/id/A/AB/ABH/Mozilla-CA-20160104.tar.gz ok
+Configuring A/AB/ABH/Mozilla-CA-20160104.tar.gz with Makefile.PL
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+Checking if your kit is complete...
+Looks good
+Writing Makefile for Mozilla::CA
+Writing MYMETA.yml and MYMETA.json
+  ABH/Mozilla-CA-20160104.tar.gz
+  /usr/bin/perl Makefile.PL -- OK
+Running make for A/AB/ABH/Mozilla-CA-20160104.tar.gz
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+cp lib/Mozilla/CA/cacert.pem blib/lib/Mozilla/CA/cacert.pem
+cp mk-ca-bundle.pl blib/lib/Mozilla/mk-ca-bundle.pl
+cp lib/Mozilla/CA.pm blib/lib/Mozilla/CA.pm
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+Manifying blib/man3/Mozilla::CA.3pm
+  ABH/Mozilla-CA-20160104.tar.gz
+  /usr/bin/make -- OK
+Running make test
+PERL_DL_NONLAZY=1 /usr/bin/perl "-MExtUtils::Command::MM" "-e" "test_harness(0, 'blib/lib', 'blib/arch')" t/*.t
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+t/locate-file.t .. ok
+All tests successful.
+Files=1, Tests=3,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.01 cusr  0.00 csys =  0.03 CPU)
+Result: PASS
+  ABH/Mozilla-CA-20160104.tar.gz
+  /usr/bin/make test -- OK
+Running make install
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+Manifying blib/man3/Mozilla::CA.3pm
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+Installing /ssddata/pipeline/bin/edirect/aux/lib/perl5/Mozilla/mk-ca-bundle.pl
+Installing /ssddata/pipeline/bin/edirect/aux/lib/perl5/Mozilla/CA.pm
+Installing /ssddata/pipeline/bin/edirect/aux/lib/perl5/Mozilla/CA/cacert.pem
+Installing /ssddata/pipeline/bin/edirect/aux/man/man3/Mozilla::CA.3pm
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NAME = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+Appending installation info to /ssddata/pipeline/bin/edirect/aux/lib/perl5/x86_64-linux-gnu-thread-multi/perllocal.pod
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "nl_NL.UTF-8",
+	LC_MONETARY = "nl_NL.UTF-8",
+	LC_ADDRESS = "nl_NL.UTF-8",
+	LC_TELEPHONE = "nl_NL.UTF-8",
+	LC_NAME = "nl_NL.UTF-8",
+	LC_MEASUREMENT = "nl_NL.UTF-8",
+	LC_IDENTIFICATION = "nl_NL.UTF-8",
+	LC_NUMERIC = "nl_NL.UTF-8",
+	LC_PAPER = "nl_NL.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+  ABH/Mozilla-CA-20160104.tar.gz
+  /usr/bin/make install  -- OK
