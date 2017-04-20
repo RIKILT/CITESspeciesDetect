@@ -21,7 +21,7 @@ The following dependencies are required:
 
 <strong>General usage</strong>
 The basic command to run the pipeline is: 
-´´´
+```
 bash CITES_pipelineV3 <FW_File> <RV_File> <SampleName> <Output directory> <List with barcodes> <List with the CITES listing> <Forward Illumina adapter> <Reverse Illumina adapter> <Minimum quality> <Minimal percentage which is above the minimum quality> <OTU radius> <Minimum readlength for clustering> <E-value> <Maximum target sequences for BLAST> <Minimum query length> <Minimum query coverage> <Percentage of identity> <OTU abundance for the output filtering> <Minimum percent of identity for the output filtering>
 ```
 
