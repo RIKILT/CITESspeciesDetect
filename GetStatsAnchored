@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# Scripts which retrieves all the statistics from the CITES pipeline
+# It gets the raw data from each different step in the analysis
+
+
+### Check the input of the script
+if [[ $# -eq 5 ]]; then
+	# Input files
+	FW_File=${1}
+	RV_File=${2}
+	SampleName=${3}
+	OutDir=${4}
+	BarCodeList=${5}
+else
+	printf "\nWrong number of arguments given.
+	Input should be: 
+	bash GetStatsAnchored <FW_File> <RV_File> <SampleName> <Output directory> <Primer file> \n\n"
+	exit 0
+fi
+
+### Statistics preprocessing
+function PreProcesssingStats(){
+	### Catch your variables
+	OutDir=${1}
+	SampleName=${2}
+	OutFile=${3}
+	code=$(cat $FW_File | head -1 | cut -c -4 ) 
+
+	printf "############ Statistics PreProcessing ############""\n" > $OutFile
+	# Get the statistics from each file which is in the preprocesssing step of the CITES pipeline
+	printf "# Reads Start file:\t"$(cat $FW_File | grep "^$code" | wc -l)"\n" >> $OutFile
+	printf "# merged reads:\t"$(cat $OutDir/PreProcessing/$SampleName.merged.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+	printf "# not merged FW file:\t"$(cat $OutDir/PreProcessing/$SampleName.nm_fwd.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+	printf "# not merged RV file:\t"$(cat $OutDir/PreProcessing/$SampleName.nm_rev.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+	printf "# QC merged reads:\t"$(cat $OutDir/PreProcessing/$SampleName.QC.merged.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+	printf "# QC FW reads:\t"$(cat $OutDir/PreProcessing/$SampleName.QC.nm_fwd.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+	printf "# QC RV reads:\t"$(cat $OutDir/PreProcessing/$SampleName.QC.nm_rev.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+	printf "############ Statistics PreProcessing ############""\n" >> $OutFile
+}
+
+### Statistics for barcode selection
+function BarCodeStats(){
+	### Catch your variables
+	OutDir=${1}
+	SampleName=${2}
+	OutFile=${3}
+
+	# Get the statistics per barcode
+	for TARGET in $(cat $BarCodeList | awk -F\; '{print $1}' | sort -u) ; do
+		
+		OutName="$OutDir/Barcodes/$TARGET"
+		printf "############ Statistics for barcode: $TARGET ############""\n" >> $OutFile
+		# Get the statistics for the primer selection
+		printf "# PS merged:\t"$(cat $OutName/PS/$TARGET.PS.merged.FT.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+		printf "# PS FW:\t"$(cat $OutName/PS/$TARGET.PS.nm_fwd.FT.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+		printf "# PS RV:\t"$(cat $OutName/PS/$TARGET.PS.nm_rev.FT.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+		printf "# combined file:\t"$(cat $OutName/$TARGET.combined.fastq | grep "^$code" | wc -l)"\n" >> $OutFile
+		if [[ -s $OutName/$TARGET.SortedLength.fasta ]]; then
+			# Get the statistics from each file which is in the barcode selection step of the CITES pipeline
+			printf "# Sorted by length:\t"$(cat $OutName/$TARGET.SortedLength.fasta | grep "^>" | wc -l)"\n" >> $OutFile
+			printf "# Dereplication:\t"$(cat $OutName/$TARGET.derep.fasta | grep "^>" | wc -l)"\n" >> $OutFile
+			printf "# Derep clusters:\t"$(cat $OutName/$TARGET.sorted.derep.fasta | grep "^>" | wc -l)"\n" >> $OutFile
+			printf "# After clustering:\t"$(cat $OutName/$TARGET.OTU.fasta | grep "^>" | wc -l)"\n" >> $OutFile
+			printf "# Trimmed clusters:\t"$(cat $OutName/$TARGET.trimmed.OTU.fasta | grep "^>" | wc -l)"\n" >> $OutFile
+		fi
+		printf "############ Statistics for barcode: $TARGET ############""\n" >> $OutFile
+	done
+}
+
+
+
+### Call all functions
+PreProcesssingStats $OutDir $SampleName $OutDir/$SampleName.stats.txt
+BarCodeStats $OutDir $SampleName $OutDir/$SampleName.stats.txt
+
+
+
+
+
+
+
+
+

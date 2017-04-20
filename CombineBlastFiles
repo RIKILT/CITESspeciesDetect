@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# Script which creates a combined file of a mixture containing the blast results per barcode
+
+
+### Check the input of the script
+if [[ $# -eq 3 ]]; then
+	# Input files
+	BarCodeList=${1}
+	OutDir=${2}
+	SampleName=${3}
+else
+	printf "\nWrong number of arguments given.
+	Input should be: 
+	bash CombineBlastFiles <Primer file> <Output directory> <Sample name> \n\n"
+	exit 0
+fi
+
+
+### Merge all the blast files (if any) into one summary file. For only the top hits.
+function CreateSummary(){
+	
+	### Catch your variables
+	OutDir=${1}
+	SampleName=${2}
+
+	OutFile=$OutDir/CombinedBlast$SampleName.txt
+
+	printf "##### Blast summary for $SampleName #####\n\n\n" > $OutFile
+
+	### Check the blast files for each barcode
+	for TARGET in $(cat $BarCodeList | awk -F\; '{print $1}'| sort -u) ; do
+		printf "##### Results for: $TARGET #####\n" >> $OutFile
+
+		### Check if a blast file is present
+		if [[ -s $OutDir/Barcodes/$TARGET/$TARGET.WithCites.TopHits.out ]]; then
+			cat $OutDir/Barcodes/$TARGET/$TARGET.WithCites.TopHits.out >> $OutFile
+			printf "\n" >> $OutFile
+		else
+			printf "\n" >> $OutFile
+		fi
+	done
+}
+
+### Merge all the blast files (if any) into one summary file. For the full blast output
+function CreateFullBlastSummary(){
+
+	### Catch your variables
+	OutDir=${1}
+	SampleName=${2}
+
+	OutFile=$OutDir/FullCombinedBlast$SampleName.txt
+	printf "##### Blast summary for $SampleName #####\n\n\n" > $OutFile
+
+	### Check the blast files for each barcode
+	for TARGET in $(cat $BarCodeList | awk -F\; '{print $1}'| sort -u) ; do
+		printf "##### Results for: $TARGET #####\n" >> $OutFile
+
+		### Check if a blast file is present
+		if [[ -s $OutDir/Barcodes/$TARGET/$TARGET.WithCites.out ]]; then
+			cat $OutDir/Barcodes/$TARGET/$TARGET.WithCites.out >> $OutFile
+			printf "\n" >> $OutFile
+		else
+			printf "\n" >> $OutFile
+		fi
+	done
+}
+
+
+### Call all functions
+CreateSummary $OutDir $SampleName
+CreateFullBlastSummary $OutDir $SampleName
+
+
+

@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Script which selects and cuts sequences based on primers
+# In the end only reads belonging to a specific target are in the output file
+# No primers should be in this output file
+# File names:
+#	- SW = Starts with (the -g function of cutadapt)
+#	- UT = Untrimmed output
+#	- FT = Fully trimmed output (both the -g as the -a function are used)
+#	- PS = Primers selected. So reads which are selected for the corresponding target
+#
+# Literature:
+#	- Martin M (2011) Cutadapt removes adapter sequences from high-troughput sequencing reads, EMBnet 17(1):10-12
+#	- http://dx.doi.org/10.14806/ej.17.1.200
+
+
+### Check the input of the script
+if [[ $# -eq 4 ]]; then
+	# Local variables
+	InFile=${1}
+	PrimerFile=${2}
+	TARGET=${3}
+	OutName=${4}
+	Error=0.2
+else
+	printf "\nWrong number of arguments given.
+	Input should be: 
+	bash PrimerSelection <InFile.fastq> <PrimerFile> <TARGET> <OutName>\n\n"
+	exit 0
+fi
+
+### Select the primers which belong to the corresponding target
+function RetrievePrimers(){
+
+	# Create two strings for the cutadapt statement. One for the primers on the beginning of the read and one for the end
+	ForPrimers=$(cat $PrimerFile | grep "^$TARGET;" | awk -F\; '{print $3}' | tr "[Ii]" "[Nn]" | sed 's/,*$//' | sed 's/,/ -g ^/g' | sed -e 's/^/-g ^/')
+	RCForPrimers=$(cat $PrimerFile | grep "^$TARGET;" | awk -F\; '{print $3}' | tr "[ATGCUatgcuNnYyRrSsWwKkMmBbDdHhVvIi]" "[TACGAtacgaNnRrYySsWwMmKkVvHhDdBbNn]" | rev | sed 's/,*$//' | sed 's/,/ -g ^/g' | sed -e 's/^/-g ^/')
+	
+	RevPrimers=$(cat $PrimerFile | grep "^$TARGET;" | awk -F\; '{print $3}' | tr "[Ii]" "[Nn]" | sed 's/,*$//' | sed 's/,/$ -a /g' | sed -e 's/^/-a /' )
+	RCRevPrimers=$(cat $PrimerFile | grep "^$TARGET;" | awk -F\; '{print $3}' | tr "[ATGCUatgcuNnYyRrSsWwKkMmBbDdHhVvIi]" "[TACGAtacgaNnRrYySsWwMmKkVvHhDdBbNn]" | rev | sed 's/,*$//' | sed 's/,/$ -a /g' | sed -e 's/^/-a /' )
+
+	### Combine the primers
+	CombiFor=$ForPrimers" "$RCForPrimers
+	CombiRev=$RevPrimers" "$RCRevPrimers
+	
+	### Perform the cutadapt statements
+	cutadapt $CombiFor --overlap 6 -o $OutName.SW.fastq -e $Error $InFile -m 10 --untrimmed-output $OutName.UT.SW.fastq > $OutName.SW_Results.out
+	cutadapt $CombiRev --overlap 6 -o $OutName.FT.fastq -e $Error -m 10 $OutName.SW.fastq > $OutName.FT_Results.out
+}
+
+
+### Call all functions
+RetrievePrimers
+
+
+
+
+
+
+

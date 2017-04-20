@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Scripts which merges forward and reverse reads into one file. 
+#
+# Literature
+#	- Edgar RC (2010) Search and clustering orders of magnitude faster than BLAST, Bioinformatics 26(19), 2460-2461.
+#	- doi: 10.1093/bioinformatics/btq461
+
+
+### Check input
+if [[ $# -eq 2 ]]; then
+	USEARCH=$1
+	OutName=$2
+	#ReadLength=$3
+	#Error=$4
+else
+	printf "\nWrong number of arguments given.
+	Input should be: 
+	bash MergeReads <Path_USEARCH> <OutName> \n\n"
+	exit 0
+fi
+
+
+### Merge reads
+function MergeReads(){
+	$USEARCH --fastq_mergepairs $OutName.R1.fastq -reverse $OutName.R2.fastq \
+	-fastqout $OutName.merged.fastq -fastqout_notmerged_rev $OutName.nm_rev.fastq \
+	-fastqout_notmerged_fwd $OutName.nm_fwd.fastq 2> $OutName.merged.USEARCH.out
+}
+
+### call all functions
+MergeReads
+

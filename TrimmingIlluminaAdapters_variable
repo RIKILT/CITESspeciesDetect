@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Script to trim the illumina adapters of reads 
+#
+# Literature:
+#	- Martin M (2011) Cutadapt removes adapter sequences from high-troughput sequencing reads, EMBnet 17(1):10-12
+#	- http://dx.doi.org/10.14806/ej.17.1.200
+
+
+# Check the input of the script
+if [[ $# -eq 5 ]]; then
+	# Local variables
+	For=$1
+	Rev=$2
+	OutName=$3
+	Ill_FW=$4
+	Ill_RV=$5
+	Error=0.2
+else
+	printf "\nWrong number of arguments given.
+	Input should be: 
+	bash TrimIlluminaAdapters <For.fastq> <Rev.fastq> <OutName> <Illumina FW> <Illumina RV>\n\n"
+	exit 0
+fi
+
+
+### Trim the Illumina adapters from all the reads
+function TrimAdapters(){
+
+	# Illumina adaptor trimming at 5'-begin
+	cutadapt -g $Ill_FW -G $Ill_FW --overlap 6 -o $OutName.5end.R1.fastq -p $OutName.5end.R2.fastq -e $Error $For $Rev > $OutName.trimming.out
+
+	# Illumina adaptor trimming at 3'-end
+	cutadapt -a $Ill_RV -A $Ill_RV --overlap 6 -o $OutName.R1.fastq -p $OutName.R2.fastq -e $Error $OutName.5end.R1.fastq $OutName.5end.R2.fastq  > $OutName.trimming.out
+}
+
+### Call all the functions
+TrimAdapters
+
+

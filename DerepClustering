@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Script which clusters all the reads
+# Performs a size selection, chimeras filtering, and an abundance sorting
+#
+# Literature:
+#	- USEARCH (Edgar 2010)
+
+
+### Check the input of the script
+if [[ $# -eq 6 ]]; then
+	# Local variables
+	USEARCH=${1}
+	InFile=${2}
+	OutName=${3}
+	MinLength=${4}
+	OTU_Rad=${5}
+	OTUabun=${6}
+else
+	printf "\nWrong number of arguments given.
+	Input should be: 
+	bash DerepClustering <Usearch> <InFile> <OutName> <MinSeqLength> <OTU_radius>\n\n"
+	exit 0
+fi
+
+
+### Performs the derep_prefix clustering from USEARCH
+function Cluster(){
+
+	### 6) Trimming based on length of barcode
+	$USEARCH -fastq_filter $InFile -fastaout $OutName.SortedLength.fasta -fastq_ascii 64 -fastq_minlen $MinLength -sizeout
+	
+	### Check if the files are empty
+	if [[ -s $OutName.SortedLength.fasta ]]; then
+		### 7) Prefixed dereplication
+		$USEARCH -derep_prefix $OutName.SortedLength.fasta -fastaout $OutName.derep.fasta -sizeout 
+
+		### 8) Sort abundance
+		$USEARCH -sortbysize $OutName.derep.fasta -fastaout $OutName.sorted.derep.fasta -minsize 4
+
+		### Check if the files are empty
+		if [[ -s $OutName.sorted.derep.fasta ]]; then
+
+			### 10) OTU clustering and renaming the clusters
+			$USEARCH -cluster_otus $OutName.sorted.derep.fasta -otu_radius_pct $OTU_Rad -otus $OutName.OTU.fasta -relabel OTU_ -sizeout -sizein > $OutName.rename.out
+
+			### 11) OTU abundance trimming
+			$USEARCH -sortbysize  $OutName.OTU.fasta -fastaout $OutName.trimmed.OTU.fasta -minsize $OTUabun
+		fi
+	fi
+}
+
+
+### Call all functions
+Cluster
+
+
+

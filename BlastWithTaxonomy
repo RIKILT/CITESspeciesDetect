@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Script which performs the BLAST statements for the CITES pipeline
+# Also adds taxonomy information to the blast file
+#
+# Literature:
+#	- blast+ (Camacho C, Coulouris G, Avagyan V, Ma N, Papadopoulos J, Bealer K, & Madden TL (2008) BLAST+: architecture and applications. BMC Bioinformatics 10:421.)
+
+
+### Check the input of the script
+if [[ $# -eq 12 ]]; then
+	# Tools
+	BLAST=${1}
+	export BLASTDB=${2}
+	EFETCH=${3}
+	Sheet=${4}
+	# Files
+	InFile=${5}
+	OutName=${6}
+	DB=${7}
+	#settings
+	Eval=${8}
+	MaxTarSeq=${9}
+	Qlen=${10}
+	Qcov=${11}
+	PIdent=${12}
+else
+	printf "\nWrong number of arguments given.
+	Input should be: 
+	bash BlastWithTaxonomy <BLAST> <exportPathBlastDB> <efetch> <Stylesheet> <InFile> <OutName> <database> <E-value> <Max target sequences> <Query length> <Query coverage> <Percentage identity>\n\n"
+	exit 0
+fi
+
+
+### Blasting
+function Blast(){
+
+	### Blast against the nt/nr database
+	$BLAST -query $InFile -task megablast -db $DB -evalue $Eval -out $OutName.blast.out -outfmt '6 qseqid qlen qcovs pident bitscore evalue sacc staxids sscinames' \
+	-max_target_seqs $MaxTarSeq -num_threads 4 -qcov_hsp_perc $Qcov
+
+	### Only get hits which are equal or above the settings
+	cat $OutName.blast.out | awk -v QCOV=$Qcov '$3 >= QCOV {print $0}' | awk -v PIDENT=$PIdent '$4 >= PIDENT {print $0}' > $OutName.filtered.blast.out
+	python RemoveDoubleEntityNCBI.py $OutName.filtered.blast.out $OutName.filtered.blast.NoDoubles.out
+	
+	### Check if the files are empty
+	if [[ -s $OutName.filtered.blast.NoDoubles.out ]]; then
+
+		### Get the taxonomy information for the BLAST results
+		IDs=$(cat $OutName.filtered.blast.NoDoubles.out | awk -F "\t" '{print $8}' | awk '{printf "%s,", $0}' | sed s'/.$//')
+		$EFETCH -db taxonomy -id $IDs -format xml | xsltproc $Sheet -  > $OutName.tax.out
+		paste $OutName.filtered.blast.NoDoubles.out $OutName.tax.out | awk -F "\t" '{print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8"\t"$9"\t"$12"\t"$13"\t"$14"\t"$15}' > $OutName.results.out
+		printf "qseqid\tqlen\tqcovs\tpident\tbitscore\tevalue\tsacc\tstaxids\tspecies\tsynonym\tgenus\tfamily\torder(infraorder)\n" | cat - $OutName.results.out > temp && mv temp $OutName.results.out
+	fi
+}
+
+
+### Call all functions
+Blast
+
+
+
+
+
+

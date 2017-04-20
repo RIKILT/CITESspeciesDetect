@@ -1,0 +1,96 @@
+#!/bin/bash
+
+# Script which parse the output from BLAST with taxonomy information
+# Couples this to: http://speciesplus.net/
+# Creates an output file in the Blast tabular output with the CITES level and to which appendix catogory a species belongs
+
+
+### Check the input of the script
+if [[ $# -eq 3 ]]; then
+	# Local variables
+	CitesList=${1}
+	BlastFile=${2}
+	OutFile=${3}
+else
+	printf "\nWrong number of arguments given.
+	Input should be: 
+	bash ListingCites <CitesList> <BlastFile> <OutFile> \n\n"
+	exit 0
+fi
+
+
+### Parse the Blast output file and get the corresponding CITES information
+function ParseBlast(){
+	while IFS='' read -r line || [[ -n "$line" ]]; do
+		
+		### Only print the title line of the blast file
+		if [[ "$line" = qseqid* ]]; then
+			printf "$line""\tLvl_CITES\tCatogory\n" > $OutFile
+		else
+			### Grep the species name based on scientific and on synonym
+			LIST=$(echo "$line" | awk -F "\t" '{print $9}' )
+			LIST2=$(echo "$line" | awk -F "\t" '{print $10}' )
+			LIST3=$(echo "$line" | awk -F "\t" '{print $12}' )
+			LIST4=$(echo "$line" | awk -F "\t" '{print $13}' )
+			LIST5=$(echo "$line" | awk -F "\t" '{print $11}' )
+
+			# Empty the Appendix2, because it might give false results
+			Appendix=""
+			Appendix2=""
+			Appendix3=""
+			Appendix4=""
+			Appendix5=""
+
+			### Get the corresponding CITES Appendix
+			Appendix=$(cat $CitesList  | awk -F\; -v "key=$LIST" '$10==key {print($0)}' | awk -F\; '{print $15 "\t" $13}'| sort -u)
+			if [ "$LIST2" != "" ]; then
+				Appendix2=$(cat $CitesList | awk -F\; -v "key=$LIST2" '$10==key {print($0)}' | awk -F\; '{print $15 "\t" $13}'| sort -u)
+			fi
+			if [ "$LIST3" != "" ]; then
+				Appendix3=$(cat $CitesList  | awk -F\; -v "key=$LIST3 spp." '$15==key {print($0)}' | awk -F\; '{print $15 "\t" $13}' | sort -u)
+			fi
+			if [ "$LIST4" != "" ]; then
+				Appendix4=$(cat $CitesList | awk -F\; -v "key=$LIST4 spp." '$15==key {print($0)}' | awk -F\; '{print $15 "\t" $13}' | sort -u)
+			fi
+			if [ "$LIST5" != "" ]; then
+				Appendix5=$(cat $CitesList | awk -F\; -v "key=$LIST5 spp." '$15==key {print($0)}' | awk -F\; '{print $15 "\t" $13}' | sort -u)
+			fi
+
+			### Check if there is an appendix value from the CITES list
+			if [ "$Appendix" == "" ]; then
+				if [ "$Appendix2" == "" ]; then
+					if [ "$Appendix3" == "" ]; then
+						if [ "$Appendix4" == "" ]; then
+							if [ "$Appendix5" == "" ]; then
+								### If there is no information from the CITES list print NA NA
+								printf "$line""\tNA\tNA\n" >> $OutFile
+							else
+								### Print the value if only the genus is present
+								printf "$line""\t""$Appendix5""\n" >> $OutFile
+							fi
+						else
+							### Print the value if only the order is present
+							printf "$line""\t""$Appendix4""\n" >> $OutFile
+						fi
+					else
+						### Print the value if only the family is present
+						printf "$line""\t""$Appendix3""\n" >> $OutFile
+					fi
+				else
+					### Print the value if the synonym is present in the CITES list while the scientific name isn't
+					printf "$line""\t""$Appendix2""\n" >> $OutFile
+				fi
+			else
+				### Print the value if the scientific name is present in the CITES list
+				printf "$line""\t""$Appendix""\n" >> $OutFile
+			fi
+		fi
+	done  < $BlastFile
+	
+}
+
+
+### Call all functions
+ParseBlast
+
+
