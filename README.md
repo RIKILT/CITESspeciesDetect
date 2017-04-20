@@ -24,7 +24,7 @@ The basic command to run the example analysis:
 ```
 bash RunExample
 ```
-Modify the following parameters in RunExample to analyse your own sample using the default settings of the pipeline</br>
+Modify the following parameters in RunExample to analyse your own sample using the default settings of the pipeline:</br>
 ```<FW_File>``` Path to forward Illumina MiSeq FASTQ file (in Illumina 1.8+ format) </br>
 ```<RV_File>``` Path to reverse Illumina MiSeq FASTQ file (in Illumina 1.8+ format) </br>
 ```<SampleName>``` Sample Name, no special characters or spaces are allowed </br>
