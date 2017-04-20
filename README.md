@@ -14,16 +14,24 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 <strong>Dependencies</strong>
 
-The following dependencies are required:
-<p>Place your copy of usearch v8.1.1861 for linux 32 bit in /bin (http://www.drive5.com/usearch/download.html)</p>
-<p>Install cutadapt v1.9+, for installation instructions see: http://cutadapt.readthedocs.io/en/stable/installation.html
-<p>For BLAST, copy the NBCI nucleotide (nt) and taxonomy (taxdb) databases into /BLASTdb (ftp://ftp.ncbi.nlm.nih.gov/blast/db/).</p>
+The following dependencies are required: </br>
+Place your copy of usearch v8.1.1861 for linux 32 bit in /bin (http://www.drive5.com/usearch/download.html) </br>
+Install cutadapt v1.9+, for installation instructions see: http://cutadapt.readthedocs.io/en/stable/installation.html </br>
+For BLAST, copy the NBCI nucleotide (nt) and taxonomy (taxdb) databases into /BLASTdb (ftp://ftp.ncbi.nlm.nih.gov/blast/db/).</br>
 
 <strong>General usage</strong>
-The basic command to run the pipeline is: 
+The basic command to run the example analysis: 
 ```
-bash CITES_pipelineV3 <FW_File> <RV_File> <SampleName> <Output directory> <List with barcodes> <List with the CITES listing> <Forward Illumina adapter> <Reverse Illumina adapter> <Minimum quality> <Minimal percentage which is above the minimum quality> <OTU radius> <Minimum readlength for clustering> <E-value> <Maximum target sequences for BLAST> <Minimum query length> <Minimum query coverage> <Percentage of identity> <OTU abundance for the output filtering> <Minimum percent of identity for the output filtering>
+bash RunExample
 ```
+Modify the following parameters in RunExample to analyse your own sample using the default settings of the pipeline</br>
+```<FW_File>``` Path to forward Illumina MiSeq FASTQ file (in Illumina 1.8+ format) </br>
+```<RV_File>``` Path to reverse Illumina MiSeq FASTQ file (in Illumina 1.8+ format) </br>
+```<SampleName>``` Sample Name, no special characters or spaces are allowed </br>
+
+
+
+
 
 
 
