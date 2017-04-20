@@ -10,14 +10,14 @@ Although the authors of this pipeline have taken care to consider exceptions suc
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-<strong>Dependencies</strong>
+<strong>Dependencies</strong> </br>
 
 The following dependencies are required: </br>
 Place your copy of usearch v8.1.1861 for linux 32 bit in /bin (http://www.drive5.com/usearch/download.html) </br>
 Install cutadapt v1.9+, for installation instructions see: http://cutadapt.readthedocs.io/en/stable/installation.html </br>
 For BLAST, copy the NBCI nucleotide (nt) and taxonomy (taxdb) databases into /BLASTdb (ftp://ftp.ncbi.nlm.nih.gov/blast/db/).</br>
 
-<strong>General usage</strong>
+<strong>General usage</strong> </br>
 The basic command to run the example analysis: 
 ```
 bash RunExample
