@@ -10,8 +10,6 @@ Although the authors of this pipeline have taken care to consider exceptions suc
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
-
 <strong>Dependencies</strong>
 
 The following dependencies are required: </br>
@@ -29,7 +27,9 @@ Modify the following parameters in RunExample to analyse your own sample using t
 ```<RV_File>``` Path to reverse Illumina MiSeq FASTQ file (in Illumina 1.8+ format) </br>
 ```<SampleName>``` Sample Name, no special characters or spaces are allowed </br>
 
-
+<strong>Output files</strong> </br>
+By default, the output is written to /OutputFolder. </br>
+The default results table is named ```<SampleName>```_98_0.2_full.tsv </br>
 
 
 
