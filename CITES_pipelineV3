@@ -1,0 +1,174 @@
+#!/bin/bash
+
+# Pipeline for the identification of CITES species
+# Calls multiple scripts and perfroms multiple analyses 
+
+### Tools
+USEARCH=$PWD/bin/USEARCH
+BLAST=$PWD/bin/ncbi-blast-2.2.31+/bin/blastn
+EFETCH=$PWD/bin/edirect/efetch
+Sheet=$PWD/bin/stylesheet11.xsl
+PRINSEQ=$PWD/bin/prinseq-lite.pl
+BLASTDB=$PWD/BLASTdb/
+DB=$PWD/BLASTdb/nt
+
+### Check the input of the script
+if [[ $# -eq 20 ]]; then
+	### Input files
+	FW_File=${1}
+	RV_File=${2}
+	SampleName=${3}
+	OutDir=${4}
+	BarCodeList=${5}
+	CitesList=${6}
+	### Illumina adapters
+	Ill_FW=${7}
+	Ill_RV=${8}
+	### Settings
+	# Fastx settings:
+	MinQual=${9}
+	MinQperc=${10}
+	# Usearch settings:
+	OTU_Rad=${11}
+	MinLength=${12}
+	# BLAST settings:
+	Eval=${13}
+	MaxTarSeq=${14}
+	Qlen=${15}
+	Qcov=${16}
+	PIdent=${17}
+	# Output filtering settings
+	FilterOTUabun=${18}
+	FilterPident=${19}
+	# Raw OTU abundance setting
+	OTUabun=${20}
+
+else
+	printf "\nWrong number of arguments given.
+	Input should be: 
+	bash CITES_pipelineV3 <FW_File> <RV_File> <SampleName> <Output directory> <List with barcodes> <List with the CITES listing> <Forward Illumina adapter> <Reverse Illumina adapter> <Minimum quality> <Minimal percentage which is above the minimum quality> <OTU radius> <Minimum readlength for clustering> <E-value> <Maximum target sequences for BLAST> <Minimum query length> <Minimum query coverage> <Percentage of identity> <OTU abundance for the output filtering> <Minimum percent of identity for the output filtering> \n\n"
+	exit 0
+fi
+
+
+### Write all the settings which are used for this analysis to a settings file
+function PrintSettings(){
+	# Get the current date of when the program is called
+	DATE=$(date)
+	### Create output folders
+	mkdir $OutDir
+	
+	printf "Analysis Date: $DATE\n
+Selected FASTQ files:
+Forward read file: $FW_File
+Reverse read file: $RV_File\n
+Fastx and FastQ settings:
+Min. quality: $MinQual
+Min. percentage with min. quality: $MinQperc\n
+Usearch settings:
+Max. allowable expect error (E): $OTU_Rad
+Min. length of reads: $MinLength\n
+Blast settings:
+Expectation value (E) threshold: $Eval
+Max. number of aligned sequences to keep: $MaxTarSeq
+Min. query length: $Qlen
+Min. percentage of query covered: $Qcov
+Min. percentage of identity: $PIdent\n
+After Analysis Settings:
+OTU_abundance: $FilterOTUabun
+Filtering % identity: $FilterPident
+Raw OTU abundance: $OTUabun" \
+>> $OutDir/$SampleName.input_settings.txt
+}
+
+### PreProcessing
+function PreProcessing(){
+
+	### Create output folders
+	mkdir $OutDir/PreProcessing
+
+	### 1) Illumina trimming
+	bash TrimmingIlluminaAdapters_variable $FW_File $RV_File $OutDir/PreProcessing/$SampleName $Ill_FW $Ill_RV
+
+	### 2) Merging forward and reverse files
+	bash MergeReads $USEARCH $OutDir/PreProcessing/$SampleName
+
+	### 3) Quality trimming (uses a sliding window)
+	# Merged reads
+	perl $PRINSEQ -fastq $OutDir/PreProcessing/$SampleName.merged.fastq -out_format 3 -out_bad null -trim_qual_right 20 -trim_qual_window 15 -trim_qual_step 5 -trim_qual_type min -out_good stdout | fastq_quality_filter -Q33 -q $MinQual -p $MinQperc -v -o $OutDir/PreProcessing/$SampleName.QC.merged.fastq > $OutDir/PreProcessing/$SampleName.merged.fastx.out
+	# FW reads
+	perl $PRINSEQ -fastq $OutDir/PreProcessing/$SampleName.nm_fwd.fastq -out_format 3 -out_bad null -trim_qual_right 20 -trim_qual_window 15 -trim_qual_step 5 -trim_qual_type min -out_good stdout | fastq_quality_filter -Q33 -q $MinQual -p $MinQperc -v -o $OutDir/PreProcessing/$SampleName.QC.nm_fwd.fastq > $OutDir/PreProcessing/$SampleName.nm_fwd.fastx.out
+	# RV reads
+	perl $PRINSEQ -fastq $OutDir/PreProcessing/$SampleName.nm_rev.fastq -out_format 3 -out_bad null -trim_qual_right 20 -trim_qual_window 15 -trim_qual_step 5 -trim_qual_type min -out_good stdout | fastq_quality_filter -Q33 -q $MinQual -p $MinQperc -v -o $OutDir/PreProcessing/$SampleName.QC.nm_rev.fastq > $OutDir/PreProcessing/$SampleName.nm_rev.fastx.out
+	echo "Done with preprocessing..."
+}
+
+### Selection per barcode
+function BarCodeSelection(){
+	# Create the output directory
+	mkdir $OutDir/Barcodes
+	
+	### Get all the targets from your barcode file
+	for TARGET in $(cat $BarCodeList | awk -F\; '{print $1}'| sort -u) ; do
+
+		# Create the output directory for the target
+		mkdir $OutDir/Barcodes/$TARGET
+		mkdir $OutDir/Barcodes/$TARGET/PS
+		echo "Currently at: $TARGET"
+
+		### 4) Primer selection and sorting per barcode (for each file: fwd, merged and rev)
+		# Merged reads
+		bash SelectAndCutPrimersAnchored $OutDir/PreProcessing/$SampleName.QC.merged.fastq $BarCodeList $TARGET $OutDir/Barcodes/$TARGET/PS/$TARGET.PS.merged
+		# Forward reads
+		bash SelectAndCutPrimersAnchored $OutDir/PreProcessing/$SampleName.QC.nm_fwd.fastq $BarCodeList $TARGET $OutDir/Barcodes/$TARGET/PS/$TARGET.PS.nm_fwd
+		# Reverse reads
+		bash SelectAndCutPrimersAnchored $OutDir/PreProcessing/$SampleName.QC.nm_rev.fastq $BarCodeList $TARGET $OutDir/Barcodes/$TARGET/PS/$TARGET.PS.nm_rev
+		
+		### 5) Combine the fully trimmed reads (merged, forward and the reverse complement of reverse reads)
+		# Make the reverse file reverse complement
+		fastx_reverse_complement -i $OutDir/Barcodes/$TARGET/PS/$TARGET.PS.nm_rev.FT.fastq -o $OutDir/Barcodes/$TARGET/PS/$TARGET.PS.nm_rev_rc.FT.fastq
+		# Combine all the files
+		cat $OutDir/Barcodes/$TARGET/PS/$TARGET.PS.merged.FT.fastq $OutDir/Barcodes/$TARGET/PS/$TARGET.PS.nm_fwd.FT.fastq $OutDir/Barcodes/$TARGET/PS/$TARGET.PS.nm_rev_rc.FT.fastq > $OutDir/Barcodes/$TARGET/$TARGET.combined.fastq
+		
+		# if file is not size 0, continue		
+		if [[ -s $OutDir/Barcodes/$TARGET/$TARGET.combined.fastq ]]; then
+			
+			### 6 t/m 11) Trimming based on length of barcode, Prefixed dereplication, Sort abundance, de novo chimeras filtering (possibly deprecated), OTU clustering, OTU abundance trimming
+			bash DerepClustering $USEARCH $OutDir/Barcodes/$TARGET/$TARGET.combined.fastq $OutDir/Barcodes/$TARGET/$TARGET $MinLength $OTU_Rad $OTUabun
+
+			if [[ -s $OutDir/Barcodes/$TARGET/$TARGET.trimmed.OTU.fasta ]]; then
+				### 12 t/m 14) Blasting the OTUs, Adding the taxonomy information from NCBI, Merging the Blast results and the taxonomy information
+				bash BlastWithTaxonomy $BLAST $BLASTDB $EFETCH $Sheet $OutDir/Barcodes/$TARGET/$TARGET.trimmed.OTU.fasta $OutDir/Barcodes/$TARGET/$TARGET $DB $Eval $MaxTarSeq $Qlen $Qcov $PIdent
+				if [[ -s $OutDir/Barcodes/$TARGET/$TARGET.results.out ]]; then
+					### 15) Couple the CITES list to the BLAST output
+					bash ListingCites $CitesList $OutDir/Barcodes/$TARGET/$TARGET.results.out $OutDir/Barcodes/$TARGET/$TARGET.WithCites.out
+			
+					### 16) Only retrieving the top hits
+					python GetTopHits.py $OutDir/Barcodes/$TARGET/$TARGET.WithCites.out $OutDir/Barcodes/$TARGET/$TARGET.WithCites.TopHits.out
+				fi
+			fi
+		fi
+	done
+}
+
+### Get all the finalizing parts of the pipeline
+function AfterAnalysis(){
+	### 17) Create a combined file of all the different BLAST files
+	bash CombineBlastFiles $BarCodeList $OutDir $SampleName
+
+	### 18) Get the statistics from the entire analysis
+	bash GetStatsAnchored $FW_File $RV_File $SampleName $OutDir $BarCodeList
+	
+	### 19) Filter the summary files with the desired settings
+	python CheckCriteriaBlastSingleSample.py $OutDir/$SampleName.stats.txt $OutDir/CombinedBlast$SampleName.txt $OutDir/FullCombinedBlast$SampleName.txt $OutDir/$SampleName $FilterOTUabun $FilterPident
+}
+
+
+### Call all functions
+PrintSettings
+PreProcessing
+BarCodeSelection
+AfterAnalysis
+
+
+

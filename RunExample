@@ -1,0 +1,34 @@
+#!/bin/bash
+
+
+### Stable variables
+FW_File=$PWD/InputExample/ExampleFile_FW.fastq
+RV_File=$PWD/InputExample/ExampleFile_RV.fastq
+# Illumina adapters
+Ill_FW="GTATAAGAGACAG"
+Ill_RV="CTGTCTCTTATAC"
+CitesList=$PWD/bin/cites_listings_2016-01-25_06_20_semicolon_separated_small.csv
+BarCodeList=$PWD/bin/PrimerFile.txt
+
+
+### variable settings (Currently for default)
+SampleName="Raw_OTUabun_4"
+OutDir=$PWD/OutputFolder/$SampleName
+# Fastx settings:
+MinQual=20
+MinQperc=95
+# Usearch settings:
+OTU_Rad=2
+MinLength=10
+# BLAST settings:
+Eval=0.001
+MaxTarSeq=20
+Qlen=10 
+Qcov=90
+PIdent=90
+FilterOTUabun=0.2
+FilterPident=98
+OTUabun=4
+
+
+time bash CITES_pipelineV3 $FW_File $RV_File $SampleName $OutDir $BarCodeList $CitesList $Ill_FW $Ill_RV $MinQual $MinQperc $OTU_Rad $MinLength $Eval $MaxTarSeq $Qlen $Qcov $PIdent $FilterOTUabun $FilterPident $OTUabun
